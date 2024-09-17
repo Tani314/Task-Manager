@@ -3,26 +3,40 @@ import { useState } from "react";
 import TaskService from "../services/task-service";
 
 interface AddTaskProps {
+  date?: Date;
+  task?: any;
   onClose: () => void;
   onTaskAdded: () => void;
 }
 
-const AddTask = ({ onClose, onTaskAdded }: AddTaskProps) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState<'pending' | 'in-progress' | 'completed'>('pending');
-  const [dueDate, setDueDate] = useState("");
+const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
+  const [title, setTitle] = useState(task?.Title || "");
+  const [description, setDescription] = useState(task?.Description || "");
+  const [status, setStatus] = useState<"pending" | "in-progress" | "completed">(
+    "pending"
+  );
+  const [dueDate, setDueDate] = useState(
+    task?.DueDate.split("T")[0] || date?.toISOString().split("T")[0] || ""
+  );
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-        await TaskService.createTask({ 
-            Title: title, 
-            Description: description, 
-            Status: status, 
-            DueDate: dueDate 
-          });
-          
+      if (task) {
+        await TaskService.updateTask(task.ID, {
+          Title: title,
+          Description: description,
+          Status: status,
+          DueDate: dueDate,
+        });
+      }
+      await TaskService.createTask({
+        Title: title,
+        Description: description,
+        Status: status,
+        DueDate: dueDate,
+      });
+
       onTaskAdded(); // Notify parent to refresh tasks
       onClose(); // Close the modal
     } catch (error) {
@@ -31,11 +45,12 @@ const AddTask = ({ onClose, onTaskAdded }: AddTaskProps) => {
   };
 
   return (
-    <div className="modal bg-white p-6 rounded shadow-lg w-full max-w-md">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div className="bg-sky-400 p-6 rounded shadow-lg max-w-sm w-full">
       <h2 className="text-2xl font-semibold mb-4">Add New Task</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-700">Title</label>
+          <label className="block text-gray-800">Title</label>
           <input
             type="text"
             value={title}
@@ -45,19 +60,22 @@ const AddTask = ({ onClose, onTaskAdded }: AddTaskProps) => {
           />
         </div>
         <div>
-          <label className="block text-gray-700">Description</label>
+          <label className="block text-gray-800">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="border p-2 rounded w-full"
-            required
           />
         </div>
         <div>
-          <label className="block text-gray-700">Status</label>
+          <label className="block text-gray-800">Status</label>
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value as 'pending' | 'in-progress' | 'completed')}
+            onChange={(e) =>
+              setStatus(
+                e.target.value as "pending" | "in-progress" | "completed"
+              )
+            }
             className="border p-2 rounded w-full"
           >
             <option value="pending">Pending</option>
@@ -66,7 +84,7 @@ const AddTask = ({ onClose, onTaskAdded }: AddTaskProps) => {
           </select>
         </div>
         <div>
-          <label className="block text-gray-700">Due Date</label>
+          <label className="block text-gray-800">Due Date</label>
           <input
             type="date"
             value={dueDate}
@@ -75,13 +93,17 @@ const AddTask = ({ onClose, onTaskAdded }: AddTaskProps) => {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded mr-2">
           Add Task
         </button>
       </form>
-      <button onClick={onClose} className="absolute top-2 right-2 text-gray-500">
-        &times;
+      <button
+        onClick={onClose}
+        className="bg-gray-500 text-white p-2 rounded"
+      >
+        Cancel
       </button>
+    </div>
     </div>
   );
 };
