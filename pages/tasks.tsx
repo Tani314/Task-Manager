@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import axios from "../utils/axios";
@@ -39,7 +39,7 @@ const TaskPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Task Management</h1>
+      <h1 className="text-3xl font-bold mb-4">My Tasks</h1>
       <button
         onClick={handleAddTask}
         className="bg-blue-500 text-white p-2 rounded"
@@ -78,13 +78,16 @@ const TaskPage = () => {
       </ul>
       {showModal === "add" && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <AddTask onClose={handleCloseModal} onTaskAdded={() => {
-            handleCloseModal();
-            // Refresh tasks after adding a new one
-            axios.get("/tasks").then((response) => {
-              setTasks(response.data);
-            });
-          }} />
+          <AddTask
+            onClose={handleCloseModal}
+            onTaskAdded={() => {
+              handleCloseModal();
+              // Refresh tasks after adding a new one
+              axios.get("/tasks").then((response) => {
+                setTasks(response.data);
+              });
+            }}
+          />
         </div>
       )}
       {showModal === "update" && selectedTask && (
