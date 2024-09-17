@@ -32,20 +32,20 @@ const TaskPage = () => {
     setSelectedTask(task);
     setShowModal("update");
   };
-  
-  const handleDeleteTask = async (task: Task) =>{
-    try{
+
+  const handleDeleteTask = async (task: Task) => {
+    try {
       await TaskService.deleteTask(task.ID);
       const response = await TaskService.getTasks();
-    // Flatten tasks into a single array
-    const updatedTasks = response.data;
-    setTasks(updatedTasks);
-  } catch (error) {
-    console.error("Error deleting task:", error);
-    setError("Failed to delete task");
-    // Optionally, show an error message to the user
-  }
-  }
+      // Flatten tasks into a single array
+      const updatedTasks = response.data;
+      setTasks(updatedTasks);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      setError("Failed to delete task");
+      // Optionally, show an error message to the user
+    }
+  };
 
   const handleCloseModal = () => {
     setShowModal(null);
@@ -79,15 +79,20 @@ const TaskPage = () => {
               </span>
             </p>
             <p>Due Date: {new Date(task.DueDate).toLocaleDateString()}</p>
-            <button
-              onClick={() => handleUpdateTask(task)}
-              className="bg-yellow-500 text-white p-2 rounded"
-            >
-              Edit
-            </button>
-            <button onClick={()=> handleDeleteTask(task)}className="bg-red-500 text-white p-2 rounded">
-              Delete
-            </button>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => handleUpdateTask(task)}
+                className="bg-yellow-500 text-white p-2 rounded px-4"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteTask(task)}
+                className="bg-red-500 text-white p-2 rounded"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
@@ -107,13 +112,17 @@ const TaskPage = () => {
       )}
       {showModal === "update" && selectedTask && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <UpdateTask task={selectedTask} onClose={handleCloseModal}  onTaskUpdated={() => {
+          <UpdateTask
+            task={selectedTask}
+            onClose={handleCloseModal}
+            onTaskUpdated={() => {
               handleCloseModal();
               // Refresh tasks after adding a new one
               axios.get("/tasks").then((response) => {
                 setTasks(response.data);
               });
-            }}/>
+            }}
+          />
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import TaskPage from "../../pages/tasks";
 import CalendarComponent from "../../components/Calender";
+import Progress from "../../pages/progress";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
     </div>
     <TaskPage/>
     <CalendarComponent/>
+    <Progress/>
     </>
   );
 }
