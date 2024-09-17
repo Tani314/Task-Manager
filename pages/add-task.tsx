@@ -18,7 +18,7 @@ const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
   const [dueDate, setDueDate] = useState(
     task?.DueDate.split("T")[0] || date?.toISOString().split("T")[0] || ""
   );
-
+0
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {

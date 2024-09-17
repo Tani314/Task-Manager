@@ -5,6 +5,7 @@ import axios from "../utils/axios";
 import { Task } from "../types/types";
 import AddTask from "./add-task"; // Ensure this import path is correct
 import UpdateTask from "../components/UpdateTask"; // Ensure this import path is correct
+import TaskService from "../services/task-service";
 
 const TaskPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,6 +32,20 @@ const TaskPage = () => {
     setSelectedTask(task);
     setShowModal("update");
   };
+  
+  const handleDeleteTask = async (task: Task) =>{
+    try{
+      await TaskService.deleteTask(task.ID);
+      const response = await TaskService.getTasks();
+    // Flatten tasks into a single array
+    const updatedTasks = response.data;
+    setTasks(updatedTasks);
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    setError("Failed to delete task");
+    // Optionally, show an error message to the user
+  }
+  }
 
   const handleCloseModal = () => {
     setShowModal(null);
@@ -39,7 +54,7 @@ const TaskPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">My Tasks</h1>
+      <h1 className="text-3xl mb-4">My Tasks</h1>
       <button
         onClick={handleAddTask}
         className="bg-blue-500 text-white p-2 rounded"
@@ -70,7 +85,7 @@ const TaskPage = () => {
             >
               Edit
             </button>
-            <button className="bg-red-500 text-white p-2 rounded">
+            <button onClick={()=> handleDeleteTask(task)}className="bg-red-500 text-white p-2 rounded">
               Delete
             </button>
           </li>
@@ -92,7 +107,13 @@ const TaskPage = () => {
       )}
       {showModal === "update" && selectedTask && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <UpdateTask task={selectedTask} onClose={handleCloseModal} />
+          <UpdateTask task={selectedTask} onClose={handleCloseModal}  onTaskUpdated={() => {
+              handleCloseModal();
+              // Refresh tasks after adding a new one
+              axios.get("/tasks").then((response) => {
+                setTasks(response.data);
+              });
+            }}/>
         </div>
       )}
     </div>
