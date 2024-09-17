@@ -1,12 +1,14 @@
-import React from 'react';
+import TaskPage from "../../pages/tasks";
+import CalendarComponent from "../../components/Calender";
 
-const Page = () => {
+export default function Home() {
   return (
-    <div>
-      <h1>Welcome to the Task Manager</h1>
-      <p>Start editing this file to see your changes.</p>
+    <>
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">    
+  Task Management
     </div>
+    <TaskPage/>
+    <CalendarComponent/>
+    </>
   );
-};
-
-export default Page;
+}
