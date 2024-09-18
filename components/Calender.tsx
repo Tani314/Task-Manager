@@ -56,7 +56,9 @@ const CalendarComponent = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-4 rounded shadow-md">
+    <h1 className="text-2xl font-bold mb-4">Calendar</h1>
+    <div className="text-gray-600">
       <Calendar
         onChange={(newDate) => setDate(newDate as Date)}
         value={date}
@@ -75,6 +77,7 @@ const CalendarComponent = () => {
         />
       )}
     </div>
+  </div>
   );
 };
 

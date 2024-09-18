@@ -55,7 +55,7 @@ const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border p-2 rounded w-full"
+            className="border text-gray-800 p-2 rounded w-full"
             required
           />
         </div>
@@ -64,7 +64,7 @@ const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border p-2 rounded w-full"
+            className="border text-gray-800 p-2 rounded w-full"
           />
         </div>
         <div>
@@ -76,7 +76,7 @@ const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
                 e.target.value as "pending" | "in-progress" | "completed"
               )
             }
-            className="border p-2 rounded w-full"
+            className="border p-2 text-gray-800 rounded w-full"
           >
             <option value="pending">Pending</option>
             <option value="in-progress">In Progress</option>
@@ -89,7 +89,7 @@ const AddTask = ({ date, task, onClose, onTaskAdded }: AddTaskProps) => {
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="border p-2 rounded w-full"
+            className="border text-gray-800 p-2 rounded w-full"
             required
           />
         </div>

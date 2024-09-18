@@ -53,33 +53,34 @@ const TaskPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl mb-4">My Tasks</h1>
+<div className="p-4  rounded shadow-md">
+      <h1 className="text-2xl text-blackfont-bold mb-4">My Tasks</h1>
       <button
         onClick={handleAddTask}
-        className="bg-blue-500 text-white p-2 rounded"
+        className="bg-blue-500 text-white p-2 rounded mb-4 block mx-auto"
       >
         Add Task
       </button>
       <ul className="space-y-4">
         {tasks.map((task) => (
-          <li key={task.ID} className="bg-white p-4 rounded shadow-md">
+          <li
+            key={task.ID}
+            className="bg-gray-100 text-black p-4 rounded shadow-md"
+          >
             <h2 className="text-xl font-semibold">{task.Title}</h2>
             <p>{task.Description}</p>
-            <p>
+            <p className="text-black">
               Status:{" "}
               <span
                 className={`font-medium ${
-                  task.Status === "completed"
-                    ? "text-green-500"
-                    : "text-red-500"
+                  task.Status === "completed" ? "text-green-500" : "text-red-500"
                 }`}
               >
                 {task.Status}
               </span>
             </p>
             <p>Due Date: {new Date(task.DueDate).toLocaleDateString()}</p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 mt-2">
               <button
                 onClick={() => handleUpdateTask(task)}
                 className="bg-yellow-500 text-white p-2 rounded px-4"
@@ -102,7 +103,6 @@ const TaskPage = () => {
             onClose={handleCloseModal}
             onTaskAdded={() => {
               handleCloseModal();
-              // Refresh tasks after adding a new one
               axios.get("/tasks").then((response) => {
                 setTasks(response.data);
               });
@@ -117,7 +117,6 @@ const TaskPage = () => {
             onClose={handleCloseModal}
             onTaskUpdated={() => {
               handleCloseModal();
-              // Refresh tasks after adding a new one
               axios.get("/tasks").then((response) => {
                 setTasks(response.data);
               });

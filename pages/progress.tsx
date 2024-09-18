@@ -54,7 +54,7 @@ const Progress = () => {
       <h1 className="text-3xl mb-4">Track Task Progress</h1>
       <div className="space-y-4">
         {tasks.map((task) => (
-          <div key={task.ID} className="bg-white p-4 rounded shadow-md">
+          <div key={task.ID} className="bg-white text-black  p-4 rounded shadow-md">
             <h2 className="text-xl font-semibold">{task.Title}</h2>
             <p>{task.Description}</p>
             <div className="flex items-center space-x-4">

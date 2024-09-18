@@ -14,20 +14,25 @@ const UpdateTask = ({ task, onClose, onTaskUpdated }: UpdateTaskProps) => {
   const [dueDate, setDueDate] = useState(new Date(task.DueDate).toISOString().split('T')[0]);
   const [status, setStatus] = useState(task.Status);
 
-  const handleSave = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSaveProgress = async () => {
     try {
-      await TaskService.updateTask(task.ID, { Title: title, Description: description, DueDate: dueDate, Status: status });
-      onTaskUpdated();  // Notify parent component to refresh the task list
-      onClose();
+      await Promise.all(
+        tasks.map((task) => {
+          const updatedStatus =
+            progress[task.ID] === 100 ? "completed" : task.Status;
+          return TaskService.updateTask(task.ID, {
+            Status: updatedStatus,
+            Progress: progress[task.ID], // Include Progress
+          });
+        })
+      );
+      alert("Progress updated successfully!");
     } catch (error) {
-      console.error("Error updating task:", error);
-      // Optionally, show an error message to the user
+      console.error("Error updating progress:", error);
     }
   };
-
   return (
-    <div className="bg-white p-6 rounded shadow-lg">
+    <div className="bg-white text-black p-6 rounded shadow-lg">
       <h2 className="text-xl font-semibold mb-4">Update Task</h2>
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Title</label>
@@ -68,7 +73,7 @@ const UpdateTask = ({ task, onClose, onTaskUpdated }: UpdateTaskProps) => {
       </div>
       <div className="flex justify-end space-x-2">
         <button
-          onClick={handleSave}
+          onClick={handleSaveProgress}
           className="bg-blue-500 text-white p-2 rounded"
         >
           Save
