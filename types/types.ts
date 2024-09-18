@@ -1,5 +1,3 @@
-// types.ts
-
 export interface Task {
     ID: number;
     Title: string;

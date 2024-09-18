@@ -4,31 +4,38 @@ import Progress from "../../pages/progress";
 import CategoriesPage from "../../pages/categories";
 
 export default function Home() {
+  const backgroundImageStyle = {
+    backgroundImage: "url('/images/background.jpg')",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    minHeight: '100vh',
+  };
+
   return (
-    <>
-      <div className="flex justify-center items-center text-3xl font-bold mb-4">
+    <div style={backgroundImageStyle}>
+    <div className="flex justify-center items-center text-3xl font-bold mb-4">
         Task Management
       </div>
-      <div className="flex justify-center items-center flex-col space-y-4">
-        <div className="grid grid-cols-2 gap-4 place-content-center">
-          <div>
+      <div className="flex flex-col space-y-4">
+
+        <div className="flex flex-row space-x-4">
+          <div className="flex-1">
             <TaskPage />
           </div>
-          <div >
+          <div className="flex-1">
             <CalendarComponent />
           </div>
         </div>
-        <div className="flex flex-col space-x-4">
-          <div className="grid grid-cols-2 gap-4 place-content-center">
-            <div>
+        
+        <div className="flex flex-row space-x-4">
+          <div className="flex-1">
             <CategoriesPage />
           </div>
-          <div>
+          <div className="flex-1">
             <Progress />
-          </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

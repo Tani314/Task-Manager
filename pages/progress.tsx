@@ -50,8 +50,8 @@ const Progress = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl mb-4">Track Task Progress</h1>
+    <div className="container p-4 rounded shadow-md">
+      <h1 className="text-3xl mb-4">Task Progress</h1>
       <div className="space-y-4">
         {tasks.map((task) => (
           <div key={task.ID} className="bg-white text-black  p-4 rounded shadow-md">

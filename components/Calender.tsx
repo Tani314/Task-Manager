@@ -32,12 +32,16 @@ const CalendarComponent = () => {
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+    const selectedDateString = date.toISOString().split("T")[0];
+    setCurrentTask(tasks[selectedDateString] || []);
+  };
+
+  const handleAddTaskClick = () => {
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setCurrentTask(null);
   };
 
   const handleTaskUpdated = () => {
@@ -52,13 +56,14 @@ const CalendarComponent = () => {
         {}
       );
       setTasks(tasksByDate);
+      handleCloseModal();
     });
   };
 
   return (
     <div className="p-4 rounded shadow-md">
-    <h1 className="text-2xl font-bold mb-4">Calendar</h1>
-    <div className="text-gray-600">
+   <h1 className="text-3xl mb-4">Calendar</h1>
+    <div className="space-y-4 text-gray-600">
       <Calendar
         onChange={(newDate) => setDate(newDate as Date)}
         value={date}
@@ -68,12 +73,38 @@ const CalendarComponent = () => {
         }}
         onClickDay={handleDateClick}
       />
+      {selectedDate && (
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold">
+            Tasks for {selectedDate.toLocaleDateString()}:
+          </h2>
+          {currentTask && currentTask.length > 0 ? (
+            <ul className="space-y-2 mt-2">
+              {currentTask.map((task) => (
+                <li key={task.ID} className="bg-gray-100 p-2 rounded">
+                  <h3 className="text-lg font-bold">{task.Title}</h3>
+                  <p>{task.Description}</p>
+                  <p>Status: {task.Status}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No tasks for this day.</p>
+          )}
+          <button
+            className="bg-blue-500 text-white p-2 rounded mt-4"
+            onClick={handleAddTaskClick}
+          >
+            Add Task
+          </button>
+        </div>
+      )}
       {showModal && (
         <AddTask
           date={selectedDate}
           task={currentTask}
           onClose={handleCloseModal}
-          onTaskUpdated={handleTaskUpdated}
+          onTaskAdded={handleTaskUpdated}
         />
       )}
     </div>

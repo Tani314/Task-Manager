@@ -53,14 +53,14 @@ const TaskPage = () => {
   };
 
   return (
-<div className="p-4  rounded shadow-md">
-      <h1 className="text-2xl text-blackfont-bold mb-4">My Tasks</h1>
-      <button
-        onClick={handleAddTask}
-        className="bg-blue-500 text-white p-2 rounded mb-4 block mx-auto"
-      >
-        Add Task
-      </button>
+    <div className="p-4 rounded shadow-md">
+      <h1 className="text-3xl mb-4">
+        My Tasks
+        <button onClick={handleAddTask} className=" text-green-900 p-2 rounded px-4">
+          +
+        </button>
+      </h1>
+
       <ul className="space-y-4">
         {tasks.map((task) => (
           <li
@@ -73,7 +73,9 @@ const TaskPage = () => {
               Status:{" "}
               <span
                 className={`font-medium ${
-                  task.Status === "completed" ? "text-green-500" : "text-red-500"
+                  task.Status === "completed"
+                    ? "text-green-500"
+                    : "text-red-500"
                 }`}
               >
                 {task.Status}

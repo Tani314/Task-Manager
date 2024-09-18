@@ -39,11 +39,9 @@ const CategoriesPage: React.FC = () => {
     fetchCategories();
   }, []);
 
-  const handleCategoryClick = async (categoryId: number) => {
+  const handleCategoryClick = async (categoryId) => {
     try {
-      const response = await axios.get<Task[]>(
-        `/tasks?categoryID=${categoryId}`
-      );
+      const response = await axios.get(`/tasks/by-category?categoryID=${categoryId}`);
       setTasks(response.data);
       setSelectedCategory(
         categories.find((cat) => cat.ID === categoryId) || null
@@ -61,7 +59,7 @@ const CategoriesPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-4 rounded shadow-md">
       <h1 className="text-3xl mb-4">Task Categories</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <ul>
@@ -82,9 +80,9 @@ const CategoriesPage: React.FC = () => {
           <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl"
+              className="absolute top-4 right-4 text-white hover:text-gray-700 text-2xl"
             >
-              &times;
+             &times;
             </button>
             <h2 className="text-2xl font-bold mb-4">
               Tasks in "{selectedCategory.Name}"
