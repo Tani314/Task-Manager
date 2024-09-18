@@ -85,7 +85,7 @@ const TaskPage = () => {
             <div className="flex space-x-4 mt-2">
               <button
                 onClick={() => handleUpdateTask(task)}
-                className="bg-yellow-500 text-white p-2 rounded px-4"
+                className="bg-green-600 text-white p-2 rounded px-4"
               >
                 Edit
               </button>

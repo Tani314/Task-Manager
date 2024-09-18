@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div style={backgroundImageStyle}>
-    <div className="flex justify-center items-center text-3xl font-bold mb-4">
+    <div className="p-4 flex justify-center items-center text-3xl font-bold mb-4">
         Task Management
       </div>
       <div className="flex flex-col space-y-4">
@@ -26,7 +26,7 @@ export default function Home() {
             <CalendarComponent />
           </div>
         </div>
-        
+
         <div className="flex flex-row space-x-4">
           <div className="flex-1">
             <CategoriesPage />

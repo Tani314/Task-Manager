@@ -71,7 +71,7 @@ const Progress = () => {
               />
               <div className="w-full bg-gray-200 rounded-full h-4 relative">
                 <div
-                  className="bg-blue-500 h-full rounded-full"
+                  className="bg-green-600 h-full rounded-full"
                   style={{ width: `${progress[task.ID] || 0}%` }}
                 />
                 <span className="absolute inset-0 flex items-center justify-center text-xs text-white">
